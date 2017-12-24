@@ -1,4 +1,5 @@
 package br.com.financeiro.util;
+
 import org.hibernate.Session;
 import org.junit.Test;
 
