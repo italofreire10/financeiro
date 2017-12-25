@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Grupo Pagamento</title>
+</h:head>
+<h:body>
+	<p:growl id="mensagem" />
+
+	<h:form id="formListagem">
+		<p:panel header="Grupo Pagamento - Listagem">
+			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+				value="#{grupoPagamentoBean.grupoPagamentos}" var="grupoPagamento">
+				<f:facet name="header">
+					<p:commandButton value="Novo" actionListener="#{grupoPagamentoBean.novo()}"
+						oncomplete="PF('dialog').show();"></p:commandButton>
+				</f:facet>
+
+				<p:column headerText="Descrição">
+					<h:outputText value="#{grupoPagamento.descricao}" />
+				</p:column>
+
+				<p:column headerText="Opções" width="90">
+					<p:commandButton icon="ui-icon-trash" actionListener="#{grupoPagamentoBean.excluir}"
+						update=":mensagem :formListagem:tabela">
+						<f:attribute name="grupoPagamentoSelecionado" value="#{grupoPagamento}" />
+						<p:confirm header="Confirmação" message="Deseja realmente excluir?" icon="ui-icon-alert" />
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-pencil" actionListener="#{grupoPagamentoBean.editar}"
+						oncomplete="PF('dialog').show();" update=":formCadastro:painel">
+						<f:attribute name="grupoPagamentoSelecionado" value="#{grupoPagamento}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes"
+					icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</p:panel>
+	</h:form>
+
+	<!-- ########## DIALOG ########## -->
+	<p:dialog widgetVar="dialog" header="Grupo Pagamento - Cadastro" draggable="false" modal="true"
+		resizable="false">
+		<h:form id="formCadastro">
+			<h:panelGrid id="painel" columns="2">
+				<p:outputLabel value="Descrição:" />
+				<p:inputText maxlength="50" size="30" required="true" requiredMessage="Campo obrigatório"
+					value="#{grupoPagamentoBean.grupoPagamento.descricao}" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="2">
+				<p:commandButton value="Gravar" actionListener="#{grupoPagamentoBean.salvar()}"
+					update=":mensagem :formListagem:tabela :formCadastro:painel" />
+				<p:commandButton value="Fechar" oncomplete="PF('dialog').hide();" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

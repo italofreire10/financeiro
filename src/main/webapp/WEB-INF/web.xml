@@ -25,6 +25,6 @@
 
 	<!-- CARREGAMENTO DO HIBERNATE -->
 	<listener>
-		<listener-class>br.com.financeiro.util.HibernateContexto</listener-class>
+		<listener-class>br.com.financeiro.util.HibernateContext</listener-class>
 	</listener>
 </web-app>
