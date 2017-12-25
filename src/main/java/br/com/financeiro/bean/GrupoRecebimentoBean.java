@@ -45,6 +45,7 @@ public class GrupoRecebimentoBean implements Serializable {
 			GrupoRecebimentoDAO grupoRecebimentoDAO = new GrupoRecebimentoDAO();
 			grupoRecebimentoDAO.salvar(grupoRecebimento);
 			grupoRecebimentos = grupoRecebimentoDAO.listar();
+			novo();
 			Messages.addGlobalInfo("Registro salvo com sucesso.");
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro ao salvar.");
@@ -74,7 +75,7 @@ public class GrupoRecebimentoBean implements Serializable {
 			Messages.addGlobalError("Ocorreu um erro ao excluir.");
 		}
 	}
-	
+
 	public void editar(ActionEvent event) {
 		grupoRecebimento = (GrupoRecebimento) event.getComponent().getAttributes().get("grupoRecebimentoSelecionado");
 	}

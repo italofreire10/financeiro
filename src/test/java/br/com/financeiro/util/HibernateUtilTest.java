@@ -11,6 +11,6 @@ public class HibernateUtilTest {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.close();
 		HibernateUtil.getSessionFactory().close();
-		
+		System.out.println("Conexão estabelecida.");
 	}
 }
