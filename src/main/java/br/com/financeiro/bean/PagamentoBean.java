@@ -69,8 +69,8 @@ public class PagamentoBean implements Serializable {
 	@PostConstruct
 	public void listar() {
 		try {
-			GrupoPagamentoDAO grupoPagamentoDAO = new GrupoPagamentoDAO();
-			grupoPagamentos = grupoPagamentoDAO.listar();
+			PagamentoDAO pagamentoDAO = new PagamentoDAO();
+			pagamentos = pagamentoDAO.listar();
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro ao listar.");
 			e.printStackTrace();
@@ -83,7 +83,7 @@ public class PagamentoBean implements Serializable {
 			pagamentoDAO.salvar(pagamento);
 			pagamentos = pagamentoDAO.listar();
 			novo();
-			Messages.addGlobalError("Registro salvo com sucesso.");
+			Messages.addGlobalInfo("Registro salvo com sucesso.");
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro ao salvar.");
 			e.printStackTrace();
