@@ -8,7 +8,7 @@
 		<h:form id="formListagem">
 			<p:panel header="Grupo Recebimento - Listagem">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
-					value="#{grupoRecebimentoBean.grupoRecebimentos}" var="grupoRecebimento">
+					value="#{grupoRecebimentoBean.grupoRecebimentos}" var="grupoRecebimento" paginator="true">
 					<f:facet name="header">
 						<p:commandButton value="Novo" actionListener="#{grupoRecebimentoBean.novo()}"
 							oncomplete="PF('dialog').show();" update=":mensagem :formCadastro:painel">
@@ -20,7 +20,7 @@
 						<h:outputText value="#{grupoRecebimento.descricao}" />
 					</p:column>
 
-					<p:column>
+					<p:column headerText="Opções" width="60">
 						<p:commandButton icon="ui-icon-trash" actionListener="#{grupoRecebimentoBean.excluir}"
 							update=":mensagem :formListagem:tabela">
 							<p:confirm header="Confirmação" message="Deseja realmente excluir?" icon="ui-icon-alert" />

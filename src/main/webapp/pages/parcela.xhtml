@@ -20,7 +20,7 @@
 						<p:outputLabel value="#{parcela.descricao}" />
 					</p:column>
 
-					<p:column headerText="Opções">
+					<p:column headerText="Opções" width="60">
 						<p:commandButton icon="ui-icon-trash" actionListener="#{parcelaBean.excluir}"
 							update=":mensagem :formListagem:tabela">
 							<p:confirm header="Confirmação" message="Deseja realmente excluir?" icon="ui-icon-alert" />

@@ -1,17 +1,26 @@
 package br.com.financeiro.bean;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
 import br.com.financeiro.dao.ParcelaDAO;
 import br.com.financeiro.domain.Parcela;
+import br.com.financeiro.util.HibernateUtil;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -79,5 +88,18 @@ public class ParcelaBean implements Serializable {
 
 	public void editar(ActionEvent event) {
 		parcela = (Parcela) event.getComponent().getAttributes().get("parcelaSelecionada");
+	}
+
+	public void imprimir() {
+		try {
+			String caminho = Faces.getRealPath("/reports/parcelas.jasper");
+			Map<String, Object> parametros = new HashMap<>();
+			Connection conexao = HibernateUtil.getConnection();
+			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
+			JasperPrintManager.printReport(relatorio, true);
+		} catch (JRException e) {
+			Messages.addGlobalError("Ocorreu um erro ao gerar o relatório.");
+			e.printStackTrace();
+		}
 	}
 }

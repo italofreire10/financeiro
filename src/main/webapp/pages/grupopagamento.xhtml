@@ -8,7 +8,7 @@
 		<h:form id="formListagem">
 			<p:panel header="Grupo Pagamento - Listagem">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
-					value="#{grupoPagamentoBean.grupoPagamentos}" var="grupoPagamento">
+					value="#{grupoPagamentoBean.grupoPagamentos}" var="grupoPagamento" paginator="true">
 					<f:facet name="header">
 						<p:commandButton value="Novo" actionListener="#{grupoPagamentoBean.novo()}"
 							oncomplete="PF('dialog').show();">
@@ -20,7 +20,7 @@
 						<h:outputText value="#{grupoPagamento.descricao}" />
 					</p:column>
 
-					<p:column headerText="Opções" width="90">
+					<p:column headerText="Opções" width="60">
 						<p:commandButton icon="ui-icon-trash" actionListener="#{grupoPagamentoBean.excluir}"
 							update=":mensagem :formListagem:tabela">
 							<f:attribute name="grupoPagamentoSelecionado" value="#{grupoPagamento}" />

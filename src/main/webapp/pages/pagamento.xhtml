@@ -6,7 +6,7 @@
 
 	<ui:define name="conteudo">
 		<h:form id="formListagem">
-			<p:panel>
+			<p:panel header="Pagamento - Listagem">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado." paginator="true"
 					value="#{pagamentoBean.pagamentos}" var="pagamento">
 					<f:facet name="header">
@@ -40,7 +40,7 @@
 						<p:outputLabel value="#{pagamento.observacao}" />
 					</p:column>
 
-					<p:column headerText="Opções">
+					<p:column headerText="Opções" width="60">
 						<p:commandButton icon="ui-icon-trash" actionListener="#{pagamentoBean.excluir}"
 							update=":mensagem :formListagem:tabela">
 							<p:confirm header="Confirmação" message="Deseja realmente excluir?" icon="ui-icon-alert" />

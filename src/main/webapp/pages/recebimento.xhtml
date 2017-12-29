@@ -37,7 +37,7 @@
 						<p:outputLabel value="#{recebimento.observacao}" />
 					</p:column>
 
-					<p:column headerText="Opções">
+					<p:column headerText="Opções" width="60">
 						<p:commandButton icon="ui-icon-trash" actionListener="#{recebimentoBean.excluir}"
 							update=":mensagem :formListagem:tabela">
 							<f:attribute name="recebimentoSelecionado" value="#{recebimento}" />
