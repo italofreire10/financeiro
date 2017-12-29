@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.0.final using JasperReports Library version 6.5.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GrupoPagamento" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="51f3cc2d-0670-47d9-80b6-88d6c5c362c3">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[ZmluYW5jZWlyby5ncnVwb3BhZ2FtZW50byBBUyAsMTU5LDcxLDc3MWRhN2JhLTQxMTktNDgxZC04
+ODY3LWRiY2NkYTQ1Y2FhYzs=]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Financeiro Data Adapter"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT financeiro.grupopagamento.descricao
+FROM financeiro.grupopagamento
+ORDER BY financeiro.grupopagamento.descricao ASC]]>
+	</queryString>
+	<field name="descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="grupopagamento"/>
+	</field>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="0" y="0" width="555" height="70" uuid="2decd81d-3ddc-4357-9567-c3724e7b3c20">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA["src/main/webapp/resources/images/banner.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement x="-1" y="8" width="555" height="30" uuid="b42f0b52-7e89-4e81-acc3-75e9e31f3b1d"/>
+				<textElement textAlignment="Center" rotation="None">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório dos Grupo de Pagamento]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="43" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="-1" y="6" width="555" height="30" uuid="dabf9134-d482-4204-8091-27a48a50e7a1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="08f54965-a131-4209-af5d-0006d7be2d65"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Descrição:]]></text>
+			</staticText>
+			<rectangle radius="0">
+				<reportElement x="0" y="36" width="555" height="1" uuid="cb20b822-2b58-4a8f-a1f2-8dc8a32e2844">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="0" width="555" height="24" uuid="cdec959d-d4b3-4a38-8606-a5b53b730798">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5c81b916-21bd-49fc-ae75-64de5482ed07"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="24" width="555" height="1" uuid="fcf850a0-34ed-41d1-8a62-dd3881f46a54">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="2" width="555" height="20" uuid="595481a0-3c57-484d-8bf3-68d70522e986">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Criado e Desenvolvido por: Ítalo Freire]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>
