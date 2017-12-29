@@ -44,7 +44,7 @@ public class GrupoRecebimentoBean implements Serializable {
 		try {
 			GrupoRecebimentoDAO grupoRecebimentoDAO = new GrupoRecebimentoDAO();
 			grupoRecebimentoDAO.salvar(grupoRecebimento);
-			grupoRecebimentos = grupoRecebimentoDAO.listar();
+			grupoRecebimentos = grupoRecebimentoDAO.listar("descricao");
 			novo();
 			Messages.addGlobalInfo("Registro salvo com sucesso.");
 		} catch (RuntimeException e) {
@@ -57,7 +57,7 @@ public class GrupoRecebimentoBean implements Serializable {
 	public void listar() {
 		try {
 			GrupoRecebimentoDAO grupoRecebimentoDAO = new GrupoRecebimentoDAO();
-			grupoRecebimentos = grupoRecebimentoDAO.listar();
+			grupoRecebimentos = grupoRecebimentoDAO.listar("descricao");
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro ao listar.");
 			e.printStackTrace();
@@ -69,7 +69,7 @@ public class GrupoRecebimentoBean implements Serializable {
 		try {
 			GrupoRecebimentoDAO grupoRecebimentoDAO = new GrupoRecebimentoDAO();
 			grupoRecebimentoDAO.excluir(grupoRecebimento);
-			grupoRecebimentos = grupoRecebimentoDAO.listar();
+			grupoRecebimentos = grupoRecebimentoDAO.listar("descricao");
 			Messages.addGlobalInfo("Registro excluído com sucesso.");
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro ao excluir.");

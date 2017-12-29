@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
@@ -50,7 +51,7 @@ public class RecebimentoBean implements Serializable {
 		recebimento = new Recebimento();
 		try {
 			GrupoRecebimentoDAO grupoRecebimentoDAO = new GrupoRecebimentoDAO();
-			grupoRecebimentos = grupoRecebimentoDAO.listar();
+			grupoRecebimentos = grupoRecebimentoDAO.listar("descricao");
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro inesperado.");
 			e.printStackTrace();
@@ -61,7 +62,7 @@ public class RecebimentoBean implements Serializable {
 	public void listar() {
 		try {
 			RecebimentoDAO recebimentoDAO = new RecebimentoDAO();
-			recebimentos = recebimentoDAO.listar();
+			recebimentos = recebimentoDAO.listar("data");
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro ao listar os registros.");
 			e.printStackTrace();
@@ -72,12 +73,36 @@ public class RecebimentoBean implements Serializable {
 		try {
 			RecebimentoDAO recebimentoDAO = new RecebimentoDAO();
 			recebimentoDAO.salvar(recebimento);
-			recebimentos = recebimentoDAO.listar();
+			recebimentos = recebimentoDAO.listar("data");
 			GrupoRecebimentoDAO grupoRecebimentoDAO = new GrupoRecebimentoDAO();
-			grupoRecebimentos = grupoRecebimentoDAO.listar();
+			grupoRecebimentos = grupoRecebimentoDAO.listar("descricao");
+			novo();
 			Messages.addGlobalInfo("Registro salvo com sucesso.");
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro ao salvar o registro.");
+			e.printStackTrace();
+		}
+	}
+
+	public void excluir(ActionEvent event) {
+		recebimento = (Recebimento) event.getComponent().getAttributes().get("recebimentoSelecionado");
+		try {
+			RecebimentoDAO recebimentoDAO = new RecebimentoDAO();
+			recebimentoDAO.excluir(recebimento);
+			recebimentos = recebimentoDAO.listar("data");
+		} catch (RuntimeException e) {
+			Messages.addGlobalError("Ocorreu um erro ao excluir o registro.");
+			e.printStackTrace();
+		}
+	}
+
+	public void editar(ActionEvent event) {
+		recebimento = (Recebimento) event.getComponent().getAttributes().get("recebimentoSelecionado");
+		try {
+			GrupoRecebimentoDAO grupoRecebimentoDAO = new GrupoRecebimentoDAO();
+			grupoRecebimentos = grupoRecebimentoDAO.listar("descricao");
+		} catch (RuntimeException e) {
+			Messages.addGlobalError("Ocorreu um erro ao listar os registros.");
 			e.printStackTrace();
 		}
 	}

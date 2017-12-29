@@ -61,16 +61,16 @@ public class PagamentoBean implements Serializable {
 	public void novo() {
 		pagamento = new Pagamento();
 		GrupoPagamentoDAO grupoPagamentoDAO = new GrupoPagamentoDAO();
-		grupoPagamentos = grupoPagamentoDAO.listar();
+		grupoPagamentos = grupoPagamentoDAO.listar("descricao");
 		ParcelaDAO parcelaDAO = new ParcelaDAO();
-		parcelas = parcelaDAO.listar();
+		parcelas = parcelaDAO.listar("descricao");
 	}
 
 	@PostConstruct
 	public void listar() {
 		try {
 			PagamentoDAO pagamentoDAO = new PagamentoDAO();
-			pagamentos = pagamentoDAO.listar();
+			pagamentos = pagamentoDAO.listar("data");
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro ao listar.");
 			e.printStackTrace();
@@ -81,7 +81,7 @@ public class PagamentoBean implements Serializable {
 		try {
 			PagamentoDAO pagamentoDAO = new PagamentoDAO();
 			pagamentoDAO.salvar(pagamento);
-			pagamentos = pagamentoDAO.listar();
+			pagamentos = pagamentoDAO.listar("data");
 			novo();
 			Messages.addGlobalInfo("Registro salvo com sucesso.");
 		} catch (RuntimeException e) {
@@ -95,7 +95,7 @@ public class PagamentoBean implements Serializable {
 		try {
 			PagamentoDAO pagamentoDAO = new PagamentoDAO();
 			pagamentoDAO.excluir(pagamento);
-			pagamentos = pagamentoDAO.listar();
+			pagamentos = pagamentoDAO.listar("data");
 			Messages.addGlobalInfo("Registro excluído com sucesso.");
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro ao excluir.");
@@ -107,9 +107,9 @@ public class PagamentoBean implements Serializable {
 		pagamento = (Pagamento) event.getComponent().getAttributes().get("pagamentoSelecionado");
 		try {
 			GrupoPagamentoDAO grupoPagamentoDAO = new GrupoPagamentoDAO();
-			grupoPagamentos = grupoPagamentoDAO.listar();
+			grupoPagamentos = grupoPagamentoDAO.listar("descricao");
 			ParcelaDAO parcelaDAO = new ParcelaDAO();
-			parcelas = parcelaDAO.listar();
+			parcelas = parcelaDAO.listar("descricao");
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro ao listar informações.");
 			e.printStackTrace();

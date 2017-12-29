@@ -45,7 +45,7 @@ public class ParcelaBean implements Serializable {
 	public void listar() {
 		try {
 			ParcelaDAO parcelaDAO = new ParcelaDAO();
-			parcelas = parcelaDAO.listar();
+			parcelas = parcelaDAO.listar("id");
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro ao listar.");
 			e.printStackTrace();
@@ -56,7 +56,7 @@ public class ParcelaBean implements Serializable {
 		try {
 			ParcelaDAO parcelaDAO = new ParcelaDAO();
 			parcelaDAO.salvar(parcela);
-			parcelas = parcelaDAO.listar();
+			parcelas = parcelaDAO.listar("id");
 			novo();
 			Messages.addGlobalInfo("Registro salvo com sucesso.");
 		} catch (RuntimeException e) {
@@ -70,14 +70,13 @@ public class ParcelaBean implements Serializable {
 		try {
 			ParcelaDAO parcelaDAO = new ParcelaDAO();
 			parcelaDAO.excluir(parcela);
-			parcelas = parcelaDAO.listar();
+			parcelas = parcelaDAO.listar("id");
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu ao excluir o registro.");
 			e.printStackTrace();
 		}
 	}
 
-	@SuppressWarnings("unlikely-arg-type")
 	public void editar(ActionEvent event) {
 		parcela = (Parcela) event.getComponent().getAttributes().get("parcelaSelecionada");
 	}

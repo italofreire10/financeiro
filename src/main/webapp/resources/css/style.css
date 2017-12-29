@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+.imgBanner {
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.divTopo {
+	margin-bottom: 5px;
+}
+
+.divConteudo {
+	margin-top: 5px;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 90%;
+}

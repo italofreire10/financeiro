@@ -45,7 +45,7 @@ public class GrupoPagamentoBean implements Serializable {
 		try {
 			GrupoPagamentoDAO grupoPagamentoDAO = new GrupoPagamentoDAO();
 			grupoPagamentoDAO.merge(grupoPagamento);
-			grupoPagamentos = grupoPagamentoDAO.listar();
+			grupoPagamentos = grupoPagamentoDAO.listar("descricao");
 			novo();
 			Messages.addGlobalInfo("Registro salvo com sucesso.");
 		} catch (RuntimeException e) {
@@ -58,7 +58,7 @@ public class GrupoPagamentoBean implements Serializable {
 	public void listar() {
 		try {
 			GrupoPagamentoDAO grupoPagamentoDAO = new GrupoPagamentoDAO();
-			grupoPagamentos = grupoPagamentoDAO.listar();
+			grupoPagamentos = grupoPagamentoDAO.listar("descricao");
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro ao listar.");
 			e.printStackTrace();
@@ -70,7 +70,7 @@ public class GrupoPagamentoBean implements Serializable {
 		try {
 			GrupoPagamentoDAO grupoPagamentoDAO = new GrupoPagamentoDAO();
 			grupoPagamentoDAO.excluir(grupoPagamento);
-			grupoPagamentos = grupoPagamentoDAO.listar();
+			grupoPagamentos = grupoPagamentoDAO.listar("descricao");
 			Messages.addGlobalInfo("Registro excluído com sucesso.");
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro ao excluir.");

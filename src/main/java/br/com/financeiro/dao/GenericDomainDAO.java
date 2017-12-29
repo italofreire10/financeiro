@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import br.com.financeiro.util.HibernateUtil;
@@ -40,10 +41,11 @@ public class GenericDomainDAO<Entidade> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Entidade> listar() {
+	public List<Entidade> listar(String campoOrder) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			Criteria consulta = session.createCriteria(classe);
+			consulta.addOrder(Order.asc(campoOrder));
 			List<Entidade> resultado = consulta.list();
 			return resultado;
 		} catch (RuntimeException e) {
@@ -67,7 +69,7 @@ public class GenericDomainDAO<Entidade> {
 			sessao.close();
 		}
 	}
-	
+
 	public void excluir(Entidade entidade) {
 		Session sessao = HibernateUtil.getSessionFactory().openSession();
 		Transaction transacao = null;
@@ -84,7 +86,7 @@ public class GenericDomainDAO<Entidade> {
 			sessao.close();
 		}
 	}
-	
+
 	public void editar(Entidade entidade) {
 		Session sessao = HibernateUtil.getSessionFactory().openSession();
 		Transaction transacao = null;
@@ -101,7 +103,7 @@ public class GenericDomainDAO<Entidade> {
 			sessao.close();
 		}
 	}
-	
+
 	public void merge(Entidade entidade) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
