@@ -8,9 +8,14 @@
 			<p:panel header="Balanço">
 				<h:panelGrid columns="5">
 					<p:outputLabel value="Data Início:" />
-					<p:calendar id="dataInicio" showOn="button" locale="pt_BR" pattern="dd/MM/yyyy" />
+					<p:calendar showOn="button" locale="pt_BR" pattern="dd/MM/yyyy">
+						<f:attribute name="dataInicio" value="" />
+					</p:calendar>
+
 					<p:outputLabel value="Data Fim:" />
-					<p:calendar id="dataFim" showOn="button" locale="pt_BR" pattern="dd/MM/yyyy" />
+					<p:calendar showOn="button" locale="pt_BR" pattern="dd/MM/yyyy">
+						<f:attribute name="dataFim" value="" />
+					</p:calendar>
 					<p:commandButton icon="ui-icon-search"></p:commandButton>
 				</h:panelGrid>
 				<div>
@@ -26,7 +31,9 @@
 						<tbody>
 							<tr>
 								<td><p:outputLabel value="3.000,00" /></td>
-								<td><p:outputLabel value="2.000,00" /></td>
+								<td><p:outputLabel value="#{pagamentoBean.totalPagamento}">
+										<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
+									</p:outputLabel></td>
 								<td><p:outputLabel value="1.000,00" /></td>
 							</tr>
 						</tbody>
