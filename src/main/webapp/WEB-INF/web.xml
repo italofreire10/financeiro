@@ -6,7 +6,7 @@
 
 	<!-- NOME DA APLICAÇÃO -->
 	<display-name>Financeiro</display-name>
-	
+
 	<welcome-file-list>
 		<welcome-file>pages/index.xhtml</welcome-file>
 	</welcome-file-list>
@@ -32,15 +32,9 @@
 		<listener-class>br.com.financeiro.util.HibernateContext</listener-class>
 	</listener>
 
-
-	<context-param>
-		<param-name>primefaces.THEME</param-name>
-		<param-value>bootstrap</param-value>
-	</context-param>
-
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
 		<param-value>afternoon</param-value>
 	</context-param>
-	
+
 </web-app>
