@@ -17,3 +17,10 @@
 .ui-widget, .ui-widget .ui-widget {
 	font-size: 90%;
 }
+
+.imgCifrao {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+}

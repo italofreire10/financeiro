@@ -20,7 +20,7 @@
 						<h:outputText value="#{grupoPagamento.descricao}" />
 					</p:column>
 
-					<p:column headerText="Opções" width="60">
+					<p:column headerText="Opções">
 						<p:commandButton icon="ui-icon-trash" actionListener="#{grupoPagamentoBean.excluir}"
 							update=":mensagem :formListagem:tabela">
 							<f:attribute name="grupoPagamentoSelecionado" value="#{grupoPagamento}" />
