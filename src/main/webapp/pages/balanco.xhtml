@@ -1,44 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="/templates/modelo.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="/templates/modelo.xhtml">
 
 	<ui:define name="conteudo">
 		<h:form id="formBalanco">
+			<p:panel header="Balanço">
+				<h:panelGrid columns="5">
+					<p:outputLabel for="dataInicio" value="Data Início:" />
+					<p:calendar id="dataInicio" showOn="button" value="#{balancoBean.dataInicio}" locale="pt_BR" pattern="dd/MM/yyyy" styleClass="col-sm"
+						mask="99/99/9999" required="true" requiredMessage="Campo obrigatório" />
 
-			<h:panelGrid columns="5" >
-				<p:outputLabel for="dataInicio" value="Data Início:" />
-				<p:calendar id="dataInicio" showOn="button" value="#{balancoBean.dataInicio}" locale="pt_BR"
-					pattern="dd/MM/yyyy" styleClass="col-sm" mask="99/99/9999" required="true"
-					requiredMessage="Campo obrigatório" />
+					<p:outputLabel for="dataFim" value="Data Fim:" />
+					<p:calendar id="dataFim" showOn="button" value="#{balancoBean.dataFim}" locale="pt_BR" pattern="dd/MM/yyyy" styleClass="col-sm" mask="99/99/9999"
+						required="true" requiredMessage="Campo obrigatório" />
 
-				<p:outputLabel for="dataFim" value="Data Fim:" />
-				<p:calendar id="dataFim" showOn="button" value="#{balancoBean.dataFim}" locale="pt_BR"
-					pattern="dd/MM/yyyy" styleClass="col-sm" mask="99/99/9999" required="true"
-					requiredMessage="Campo obrigatório" />
+					<p:commandButton icon="ui-icon-search" actionListener="#{balancoBean.listar()}" update=":formBalanco:painel" styleClass="btn btn-outline-dark" />
+				</h:panelGrid>
 
-				<p:commandButton icon="ui-icon-search" actionListener="#{balancoBean.listar()}"
-					update=":formBalanco:painel" styleClass="btn btn-outline-dark" />
-			</h:panelGrid>
+				<h:panelGrid id="painel" columns="3" styleClass="table table-bordered">
+					<h:outputLabel value="Recebimentos" />
+					<h:outputLabel value="Pagamentos" />
+					<h:outputLabel value="Saldo" />
 
-			<h:panelGrid id="painel" columns="3" styleClass="table table-bordered">
-				<h:outputLabel value="Recebimentos" />
-				<h:outputLabel value="Pagamentos" />
-				<h:outputLabel value="Saldo" />
+					<h:outputText value="#{balancoBean.totalRecebimento}">
+						<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
+					</h:outputText>
 
-				<h:outputText value="#{balancoBean.totalRecebimento}">
-					<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
-				</h:outputText>
+					<h:outputText value="#{balancoBean.totalPagamento}">
+						<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
+					</h:outputText>
 
-				<h:outputText value="#{balancoBean.totalPagamento}">
-					<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
-				</h:outputText>
-
-				<h:outputText value="#{balancoBean.saldo}">
-					<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
-				</h:outputText>
-			</h:panelGrid>
+					<h:outputText value="#{balancoBean.saldo}">
+						<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
+					</h:outputText>
+				</h:panelGrid>
+			</p:panel>
 		</h:form>
 	</ui:define>
 </ui:composition>
