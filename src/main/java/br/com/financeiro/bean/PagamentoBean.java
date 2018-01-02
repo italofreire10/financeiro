@@ -140,21 +140,11 @@ public class PagamentoBean implements Serializable {
 		}
 	}
 
-	public void limparTabela() {
-		for (int i = 0; i < pagamentos.size(); i++) {
-			pagamentos.remove(i);
-			pagamentos.clear();
-		}
-	}
-
-	public void listarFiltro() {
+	public void listarFiltro() {		
 		listar();
-
 		Iterator<Pagamento> busca = pagamentos.iterator();
-
 		while (busca.hasNext()) {
 			Pagamento item = busca.next();
-
 			if (item.getData().before(getDataInicio()) == true || item.getData().after(getDataFim())) {
 				busca.remove();
 			}

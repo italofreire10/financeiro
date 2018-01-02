@@ -1,6 +1,8 @@
 package br.com.financeiro.bean;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -22,6 +24,7 @@ public class RecebimentoBean implements Serializable {
 	private Recebimento recebimento;
 	private List<Recebimento> recebimentos;
 	private List<GrupoRecebimento> grupoRecebimentos;
+	private Date dataInicio, dataFim;
 
 	public Recebimento getRecebimento() {
 		return recebimento;
@@ -45,6 +48,22 @@ public class RecebimentoBean implements Serializable {
 
 	public void setGrupoRecebimentos(List<GrupoRecebimento> grupoRecebimentos) {
 		this.grupoRecebimentos = grupoRecebimentos;
+	}
+
+	public Date getDataInicio() {
+		return dataInicio;
+	}
+
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
+	}
+
+	public Date getDataFim() {
+		return dataFim;
+	}
+
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
 	}
 
 	public void novo() {
@@ -104,6 +123,17 @@ public class RecebimentoBean implements Serializable {
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro ao listar os registros.");
 			e.printStackTrace();
+		}
+	}
+
+	public void listarFiltro() {
+		listar();
+		Iterator<Recebimento> busca = recebimentos.iterator();
+		while (busca.hasNext()) {
+			Recebimento item = busca.next();
+			if (item.getData().before(getDataInicio()) == true || item.getData().after(getDataFim())) {
+				busca.remove();
+			}
 		}
 	}
 }

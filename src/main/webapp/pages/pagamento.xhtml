@@ -5,18 +5,20 @@
 
 	<ui:define name="conteudo">
 		<h:form>
-			<h:panelGrid columns="5">
-				<p:outputLabel for="dataInicio" value="Data Início:" />
-				<p:calendar id="dataInicio" showOn="button" locale="pt_BR" pattern="dd/MM/yyyy" styleClass="col-sm" mask="99/99/9999" required="true"
-					requiredMessage="Campo obrigatório" value="#{pagamentoBean.dataInicio}"/>
+			<p:panel>
+				<h:panelGrid columns="5">
+					<p:outputLabel for="dataInicio" value="Data Início:" />
+					<p:calendar id="dataInicio" showOn="button" locale="pt_BR" pattern="dd/MM/yyyy" styleClass="col-sm" mask="99/99/9999" required="true"
+						requiredMessage="Campo obrigatório" value="#{pagamentoBean.dataInicio}" />
 
-				<p:outputLabel for="dataFim" value="Data Fim:" />
-				<p:calendar id="dataFim" showOn="button" locale="pt_BR" pattern="dd/MM/yyyy" styleClass="col-sm" mask="99/99/9999" required="true"
-					requiredMessage="Campo obrigatório" value="#{pagamentoBean.dataFim}"/>
+					<p:outputLabel for="dataFim" value="Data Fim:" />
+					<p:calendar id="dataFim" showOn="button" locale="pt_BR" pattern="dd/MM/yyyy" styleClass="col-sm" mask="99/99/9999" required="true"
+						requiredMessage="Campo obrigatório" value="#{pagamentoBean.dataFim}" />
 
-				<p:commandButton icon="ui-icon-search" styleClass="btn btn-outline-dark" actionListener="#{pagamentoBean.listarFiltro()}"
-					update=":mensagem :formListagem:tabela" />
-			</h:panelGrid>
+					<p:commandButton icon="ui-icon-search" styleClass="btn btn-outline-dark" actionListener="#{pagamentoBean.listarFiltro()}"
+						update=":mensagem :formListagem:tabela" />
+				</h:panelGrid>
+			</p:panel>
 		</h:form>
 
 		<h:form id="formListagem">
