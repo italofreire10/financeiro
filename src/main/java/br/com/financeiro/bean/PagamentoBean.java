@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -138,21 +140,23 @@ public class PagamentoBean implements Serializable {
 		}
 	}
 
-	public void listarFiltro() {
-		pagamentos.clear();
-		
-		try {
-			PagamentoDAO pagamentoDAO = new PagamentoDAO();
-			pagamentos = pagamentoDAO.listar("data");
-		} catch (RuntimeException e) {
-			Messages.addGlobalError("Ocorreu um erro ao listar.");
-			e.printStackTrace();
+	public void limparTabela() {
+		for (int i = 0; i < pagamentos.size(); i++) {
+			pagamentos.remove(i);
+			pagamentos.clear();
 		}
-		
-		for (Pagamento pagamento : pagamentos) {
-			if ((pagamento.getData().after(dataInicio) || pagamento.getData().equals(dataInicio))
-					&& (pagamento.getData().before(dataFim) || pagamento.getData().equals(dataFim))) {
-				pagamentos.add(pagamento);
+	}
+
+	public void listarFiltro() {
+		listar();
+
+		Iterator<Pagamento> busca = pagamentos.iterator();
+
+		while (busca.hasNext()) {
+			Pagamento item = busca.next();
+
+			if (item.getData().before(getDataInicio()) == true || item.getData().after(getDataFim())) {
+				busca.remove();
 			}
 		}
 	}

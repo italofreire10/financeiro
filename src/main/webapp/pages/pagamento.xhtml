@@ -1,73 +1,65 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="/templates/modelo.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="/templates/modelo.xhtml">
 
 	<ui:define name="conteudo">
-		<h:form id="formFiltro">
-			<p:panel>
-				<h:panelGrid columns="5" id="painel">
-					<p:outputLabel for="dataInicio" value="Data Início:" />
-					<p:calendar id="dataInicio" showOn="button" locale="pt_BR" pattern="dd/MM/yyyy" styleClass="col-sm"
-						mask="99/99/9999" required="true" requiredMessage="Campo obrigatório"
-						value="#{pagamentoBean.dataInicio}" />
+		<h:form>
+			<h:panelGrid columns="5">
+				<p:outputLabel for="dataInicio" value="Data InÃ­cio:" />
+				<p:calendar id="dataInicio" showOn="button" locale="pt_BR" pattern="dd/MM/yyyy" styleClass="col-sm" mask="99/99/9999" required="true"
+					requiredMessage="Campo obrigatÃ³rio" value="#{pagamentoBean.dataInicio}"/>
 
-					<p:outputLabel for="dataFim" value="Data Fim:" />
-					<p:calendar id="dataFim" showOn="button" locale="pt_BR" pattern="dd/MM/yyyy" styleClass="col-sm"
-						mask="99/99/9999" required="true" requiredMessage="Campo obrigatório"
-						value="#{pagamentoBean.dataFim}" />
+				<p:outputLabel for="dataFim" value="Data Fim:" />
+				<p:calendar id="dataFim" showOn="button" locale="pt_BR" pattern="dd/MM/yyyy" styleClass="col-sm" mask="99/99/9999" required="true"
+					requiredMessage="Campo obrigatÃ³rio" value="#{pagamentoBean.dataFim}"/>
 
-					<p:commandButton icon="ui-icon-search" actionListener="#{pagamentoBean.listarFiltro()}"
-						styleClass="btn btn-outline-dark" update=":formListagem:tabela" />
-				</h:panelGrid>
-			</p:panel>
+				<p:commandButton icon="ui-icon-search" styleClass="btn btn-outline-dark" actionListener="#{pagamentoBean.listarFiltro()}"
+					update=":mensagem :formListagem:tabela" />
+			</h:panelGrid>
 		</h:form>
 
 		<h:form id="formListagem">
 			<p:panel header="Pagamentos - Listagem">
-				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado." paginator="true" rows="10"
-					value="#{pagamentoBean.pagamentos}" var="pagamento">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado." paginator="true" rows="10" value="#{pagamentoBean.pagamentos}" var="pagamento">
 					<f:facet name="header">
-						<p:commandButton value="Novo" actionListener="#{pagamentoBean.novo()}"
-							oncomplete="PF('dialog').show();" update=":formCadastro:painel">
+						<p:commandButton value="Novo" actionListener="#{pagamentoBean.novo()}" oncomplete="PF('dialog').show();" update=":formCadastro:painel">
 							<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
 
 					<p:column headerText="Data" width="100">
-						<p:outputLabel value="#{pagamento.data}">
+						<p:outputLabel id="pagData" value="#{pagamento.data}">
 							<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy" />
 						</p:outputLabel>
 					</p:column>
 
 					<p:column headerText="Valor" width="100">
-						<p:outputLabel value="#{pagamento.valor}">
+						<p:outputLabel id="pagValor" value="#{pagamento.valor}">
 							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
 						</p:outputLabel>
 					</p:column>
 
 					<p:column headerText="Grupo" width="200">
-						<p:outputLabel value="#{pagamento.grupoPagamento.descricao}" />
+						<p:outputLabel id="pagGrupo" value="#{pagamento.grupoPagamento.descricao}" />
 					</p:column>
 
-					<p:column headerText="Parcela" width="70">
+					<p:column id="pagParcela" headerText="Parcela" width="70">
 						<p:outputLabel value="#{pagamento.parcela.descricao}" />
 					</p:column>
 
-					<p:column headerText="Observação">
+					<p:column id="pagObs" headerText="ObservaÃ§Ã£o">
 						<p:outputLabel value="#{pagamento.observacao}" />
 					</p:column>
 
-					<p:column headerText="Opções" width="100">
-						<p:commandButton icon="ui-icon-trash" actionListener="#{pagamentoBean.excluir}"
-							update=":mensagem :formListagem:tabela">
-							<p:confirm header="Confirmação" message="Deseja realmente excluir?" icon="ui-icon-alert" />
+					<p:column headerText="OpÃ§Ãµes" width="100">
+						<p:commandButton icon="ui-icon-trash" actionListener="#{pagamentoBean.excluir}" update=":mensagem :formListagem:tabela" id="pagBtn">
+							<p:confirm header="ConfirmaÃ§Ã£o" message="Deseja realmente excluir?" icon="ui-icon-alert" />
 							<f:attribute name="pagamentoSelecionado" value="#{pagamento}" />
 						</p:commandButton>
 
-						<p:commandButton icon="ui-icon-pencil" actionListener="#{pagamentoBean.editar}"
-							oncomplete="PF('dialog').show();" update=":mensagem :formCadastro:painel">
+						<p:commandButton icon="ui-icon-pencil" actionListener="#{pagamentoBean.editar}" oncomplete="PF('dialog').show();"
+							update=":mensagem :formCadastro:painel">
 							<f:attribute name="pagamentoSelecionado" value="#{pagamento}" />
 						</p:commandButton>
 					</p:column>
@@ -75,51 +67,43 @@
 
 				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 					<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-					<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-iconclose" />
+					<p:commandButton value="NÃ£o" type="button" styleClass="ui-confirmdialog-no" icon="ui-iconclose" />
 				</p:confirmDialog>
 			</p:panel>
 		</h:form>
 
-		<!-- ########## DIÁLOGO ########## -->
-		<p:dialog widgetVar="dialog" header="Pagamento - Cadastro" showEffect="fade" hideEffect="fade"
-			draggable="false" modal="true" resizable="false">
+		<!-- ########## DIÃLOGO ########## -->
+		<p:dialog widgetVar="dialog" header="Pagamento - Cadastro" showEffect="fade" hideEffect="fade" draggable="false" modal="true" resizable="false">
 			<h:form id="formCadastro">
 				<h:panelGrid id="painel" columns="2">
 					<p:outputLabel value="Data:" />
-					<p:calendar value="#{pagamentoBean.pagamento.data}" showOn="button" locale="pt_BR"
-						pattern="dd/MM/yyyy" mask="99/99/9999" />
+					<p:calendar value="#{pagamentoBean.pagamento.data}" showOn="button" locale="pt_BR" pattern="dd/MM/yyyy" mask="99/99/9999" />
 
 					<p:outputLabel value="Valor:" />
-					<p:inputText value="#{pagamentoBean.pagamento.valor}" required="true"
-						requiredMessage="Campo obriagtório." converterMessage="Preenchimento inválido"
-						validatorMessage="Valor inválida">
+					<p:inputText value="#{pagamentoBean.pagamento.valor}" required="true" requiredMessage="Campo obriagtÃ³rio."
+						converterMessage="Preenchimento invÃ¡lido" validatorMessage="Valor invÃ¡lida">
 						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
 						<f:validateDoubleRange minimum="0.01" />
 					</p:inputText>
 
 					<p:outputLabel value="Grupo:" />
-					<p:selectOneMenu value="#{pagamentoBean.pagamento.grupoPagamento}"
-						converter="omnifaces.SelectItemsConverter">
-						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma opção" />
-						<f:selectItems value="#{pagamentoBean.grupoPagamentos}" var="grupo" itemLabel="#{grupo.descricao}"
-							itemValue="#{grupo}" />
+					<p:selectOneMenu value="#{pagamentoBean.pagamento.grupoPagamento}" converter="omnifaces.SelectItemsConverter">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma opÃ§Ã£o" />
+						<f:selectItems value="#{pagamentoBean.grupoPagamentos}" var="grupo" itemLabel="#{grupo.descricao}" itemValue="#{grupo}" />
 					</p:selectOneMenu>
 
 					<p:outputLabel value="Parcela:" />
-					<p:selectOneMenu value="#{pagamentoBean.pagamento.parcela}"
-						converter="omnifaces.SelectItemsConverter">
-						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma opção" />
-						<f:selectItems value="#{pagamentoBean.parcelas}" var="parcela" itemLabel="#{parcela.descricao}"
-							itemValue="#{parcela}" />
+					<p:selectOneMenu value="#{pagamentoBean.pagamento.parcela}" converter="omnifaces.SelectItemsConverter">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma opÃ§Ã£o" />
+						<f:selectItems value="#{pagamentoBean.parcelas}" var="parcela" itemLabel="#{parcela.descricao}" itemValue="#{parcela}" />
 					</p:selectOneMenu>
 
-					<p:outputLabel value="Observação:" />
+					<p:outputLabel value="ObservaÃ§Ã£o:" />
 					<p:inputTextarea value="#{pagamentoBean.pagamento.observacao}" cols="30" rows="5" />
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
-					<p:commandButton value="Gravar" actionListener="#{pagamentoBean.salvar()}"
-						update=":mensagem :formListagem:tabela :formCadastro:painel" />
+					<p:commandButton value="Gravar" actionListener="#{pagamentoBean.salvar()}" update=":mensagem :formListagem:tabela :formCadastro:painel" />
 					<p:commandButton value="Fechar" oncomplete="PF('dialog').hide();" />
 				</h:panelGrid>
 			</h:form>
