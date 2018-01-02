@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -29,6 +30,7 @@ public class PagamentoBean implements Serializable {
 	private List<Pagamento> pagamentos;
 	private List<GrupoPagamento> grupoPagamentos;
 	private List<Parcela> parcelas;
+	private Date dataInicio, dataFim;
 
 	public Pagamento getPagamento() {
 		return pagamento;
@@ -60,6 +62,22 @@ public class PagamentoBean implements Serializable {
 
 	public void setParcelas(List<Parcela> parcelas) {
 		this.parcelas = parcelas;
+	}
+
+	public Date getDataInicio() {
+		return dataInicio;
+	}
+
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
+	}
+
+	public Date getDataFim() {
+		return dataFim;
+	}
+
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
 	}
 
 	public void novo() {
@@ -117,6 +135,25 @@ public class PagamentoBean implements Serializable {
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro ao listar informações.");
 			e.printStackTrace();
+		}
+	}
+
+	public void listarFiltro() {
+		pagamentos.clear();
+		
+		try {
+			PagamentoDAO pagamentoDAO = new PagamentoDAO();
+			pagamentos = pagamentoDAO.listar("data");
+		} catch (RuntimeException e) {
+			Messages.addGlobalError("Ocorreu um erro ao listar.");
+			e.printStackTrace();
+		}
+		
+		for (Pagamento pagamento : pagamentos) {
+			if ((pagamento.getData().after(dataInicio) || pagamento.getData().equals(dataInicio))
+					&& (pagamento.getData().before(dataFim) || pagamento.getData().equals(dataFim))) {
+				pagamentos.add(pagamento);
+			}
 		}
 	}
 }
