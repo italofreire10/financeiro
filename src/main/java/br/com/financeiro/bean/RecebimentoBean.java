@@ -1,6 +1,7 @@
 package br.com.financeiro.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +26,7 @@ public class RecebimentoBean implements Serializable {
 	private List<Recebimento> recebimentos;
 	private List<GrupoRecebimento> grupoRecebimentos;
 	private Date dataInicio, dataFim;
+	private BigDecimal totalRecebimentos;
 
 	public Recebimento getRecebimento() {
 		return recebimento;
@@ -66,6 +68,14 @@ public class RecebimentoBean implements Serializable {
 		this.dataFim = dataFim;
 	}
 
+	public BigDecimal getTotalRecebimentos() {
+		return totalRecebimentos;
+	}
+
+	public void setTotalRecebimentos(BigDecimal totalRecebimentos) {
+		this.totalRecebimentos = totalRecebimentos;
+	}
+
 	public void novo() {
 		recebimento = new Recebimento();
 		try {
@@ -82,6 +92,7 @@ public class RecebimentoBean implements Serializable {
 		try {
 			RecebimentoDAO recebimentoDAO = new RecebimentoDAO();
 			recebimentos = recebimentoDAO.listar("data");
+			totalizarRecebimentos();
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro ao listar os registros.");
 			e.printStackTrace();
@@ -95,6 +106,7 @@ public class RecebimentoBean implements Serializable {
 			recebimentos = recebimentoDAO.listar("data");
 			GrupoRecebimentoDAO grupoRecebimentoDAO = new GrupoRecebimentoDAO();
 			grupoRecebimentos = grupoRecebimentoDAO.listar("descricao");
+			totalizarRecebimentos();
 			novo();
 			Messages.addGlobalInfo("Registro salvo com sucesso.");
 		} catch (RuntimeException e) {
@@ -109,6 +121,7 @@ public class RecebimentoBean implements Serializable {
 			RecebimentoDAO recebimentoDAO = new RecebimentoDAO();
 			recebimentoDAO.excluir(recebimento);
 			recebimentos = recebimentoDAO.listar("data");
+			totalizarRecebimentos();
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro ao excluir o registro.");
 			e.printStackTrace();
@@ -120,6 +133,7 @@ public class RecebimentoBean implements Serializable {
 		try {
 			GrupoRecebimentoDAO grupoRecebimentoDAO = new GrupoRecebimentoDAO();
 			grupoRecebimentos = grupoRecebimentoDAO.listar("descricao");
+			totalizarRecebimentos();
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Ocorreu um erro ao listar os registros.");
 			e.printStackTrace();
@@ -134,6 +148,14 @@ public class RecebimentoBean implements Serializable {
 			if (item.getData().before(getDataInicio()) == true || item.getData().after(getDataFim())) {
 				busca.remove();
 			}
+		}
+		totalizarRecebimentos();
+	}
+
+	public void totalizarRecebimentos() {
+		totalRecebimentos = new BigDecimal(0);
+		for (Recebimento recebimento : recebimentos) {
+			totalRecebimentos = totalRecebimentos.add(recebimento.getValor());
 		}
 	}
 }

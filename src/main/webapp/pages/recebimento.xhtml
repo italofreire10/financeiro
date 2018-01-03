@@ -1,32 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="/templates/modelo.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="/templates/modelo.xhtml">
 
 	<ui:define name="conteudo">
 		<h:form>
 			<p:panel>
 				<h:panelGrid columns="5">
 					<p:outputLabel for="dataInicio" value="Data Início:" />
-					<p:calendar id="dataInicio" showOn="button" locale="pt_BR" pattern="dd/MM/yyyy" styleClass="col-sm" mask="99/99/9999" required="true"
-						requiredMessage="Campo obrigatório" value="#{pagamentoBean.dataInicio}" />
+					<p:calendar id="dataInicio" showOn="button" locale="pt_BR" pattern="dd/MM/yyyy" styleClass="col-sm"
+						mask="99/99/9999" required="true" requiredMessage="Campo obrigatório"
+						value="#{recebimentoBean.dataInicio}">
+					</p:calendar>
 
 					<p:outputLabel for="dataFim" value="Data Fim:" />
-					<p:calendar id="dataFim" showOn="button" locale="pt_BR" pattern="dd/MM/yyyy" styleClass="col-sm" mask="99/99/9999" required="true"
-						requiredMessage="Campo obrigatório" value="#{pagamentoBean.dataFim}" />
+					<p:calendar id="dataFim" showOn="button" locale="pt_BR" pattern="dd/MM/yyyy" styleClass="col-sm"
+						mask="99/99/9999" required="true" requiredMessage="Campo obrigatório"
+						value="#{recebimentoBean.dataFim}">
+					</p:calendar>
 
-					<p:commandButton icon="ui-icon-search" styleClass="btn btn-outline-dark" actionListener="#{pagamentoBean.listarFiltro()}"
-						update=":mensagem :formListagem:tabela" />
+					<p:commandButton icon="ui-icon-search" styleClass="btn btn-outline-dark"
+						actionListener="#{recebimentoBean.listarFiltro()}"
+						update=":mensagem :formListagem:tabela :formFiltro:painel">
+						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+
 				</h:panelGrid>
 			</p:panel>
 		</h:form>
 
 		<h:form id="formListagem">
-			<p:panel header="Recebimentos - Listagem">
-				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado." value="#{recebimentoBean.recebimentos}" var="recebimento" paginator="true">
+			<p:panel header="Recebimentos - Listagem" >
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					value="#{recebimentoBean.recebimentos}" var="recebimento" paginator="true" rows="10">
 					<f:facet name="header">
-						<p:commandButton value="Novo" actionListener="#{recebimentoBean.novo()}" update=":mensagem :formCadastro:painel"
-							oncomplete="PF('dialog').show();">
+						<p:commandButton value="Novo" actionListener="#{recebimentoBean.novo()}"
+							update=":mensagem :formCadastro:painel" oncomplete="PF('dialog').show();">
 							<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
@@ -52,12 +62,13 @@
 					</p:column>
 
 					<p:column headerText="Opções" width="100">
-						<p:commandButton icon="ui-icon-trash" actionListener="#{recebimentoBean.excluir}" update=":mensagem :formListagem:tabela">
+						<p:commandButton icon="ui-icon-trash" actionListener="#{recebimentoBean.excluir}"
+							update=":mensagem :formListagem:tabela">
 							<f:attribute name="recebimentoSelecionado" value="#{recebimento}" />
 							<p:confirm header="Confirmação" message="Deseja realmente excluir?" icon="ui-icon-alert" />
 						</p:commandButton>
-						<p:commandButton icon="ui-icon-pencil" actionListener="#{recebimentoBean.editar}" update=":mensagem :formCadastro:painel"
-							oncomplete="PF('dialog').show();">
+						<p:commandButton icon="ui-icon-pencil" actionListener="#{recebimentoBean.editar}"
+							update=":mensagem :formCadastro:painel" oncomplete="PF('dialog').show();">
 							<f:attribute name="recebimentoSelecionado" value="#{recebimento}" />
 						</p:commandButton>
 					</p:column>
@@ -70,26 +81,35 @@
 			</p:panel>
 		</h:form>
 
+		<h:form id="formFiltro" styleClass="form-group">
+			<h:panelGrid id="painel" columns="2">
+				<p:outputLabel value="Total:" styleClass="form-control-lg" />
+				<p:outputLabel value="#{recebimentoBean.totalRecebimentos}" styleClass="form-control-lg" />
+			</h:panelGrid>
+		</h:form>
+
 		<!-- ########## DIÁLOGO ########## -->
-		<p:dialog widgetVar="dialog" header="Recebimento - Listagem" draggable="false" showEffect="fade" hideEffect="fade" modal="true" resizable="false">
+		<p:dialog widgetVar="dialog" header="Recebimento - Listagem" draggable="false" showEffect="fade"
+			hideEffect="fade" modal="true" resizable="false">
 			<h:form id="formCadastro">
 				<h:panelGrid id="painel" columns="2">
 					<p:outputLabel value="Data:" />
-					<p:calendar value="#{recebimentoBean.recebimento.data}" showOn="button" pattern="dd/MM/yyyy" locale="pt_BR" mask="99/99/9999" />
+					<p:calendar value="#{recebimentoBean.recebimento.data}" showOn="button" pattern="dd/MM/yyyy"
+						locale="pt_BR" mask="99/99/9999" />
 
 					<p:outputLabel value="Valor:" />
-					<p:inputText value="#{recebimentoBean.recebimento.valor}" validatorMessage="Valor inválida" required="true" requiredMessage="Campo obriagtório."
-						converterMessage="Preenchimento inválido">
+					<p:inputText value="#{recebimentoBean.recebimento.valor}" validatorMessage="Valor inválida"
+						required="true" requiredMessage="Campo obriagtório." converterMessage="Preenchimento inválido">
 						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
 						<f:validateDoubleRange minimum="0.01" />
 					</p:inputText>
 
 					<p:outputLabel value="Grupo:" />
-					<p:selectOneMenu value="#{recebimentoBean.recebimento.grupoRecebimento}" required="true" requiredMessage="Campo obriagtório."
-						converter="omnifaces.SelectItemsConverter">
+					<p:selectOneMenu value="#{recebimentoBean.recebimento.grupoRecebimento}" required="true"
+						requiredMessage="Campo obriagtório." converter="omnifaces.SelectItemsConverter">
 						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma opção" />
-						<f:selectItems value="#{recebimentoBean.grupoRecebimentos}" var="grupoRecebimento" itemValue="#{grupoRecebimento}"
-							itemLabel="#{grupoRecebimento.descricao}" />
+						<f:selectItems value="#{recebimentoBean.grupoRecebimentos}" var="grupoRecebimento"
+							itemValue="#{grupoRecebimento}" itemLabel="#{grupoRecebimento.descricao}" />
 					</p:selectOneMenu>
 
 					<p:outputLabel value="Observação:" />
@@ -97,7 +117,8 @@
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
-					<p:commandButton value="Gravar" actionListener="#{recebimentoBean.salvar()}" update=":mensagem :formListagem:tabela :formCadastro:painel" />
+					<p:commandButton value="Gravar" actionListener="#{recebimentoBean.salvar()}"
+						update=":mensagem :formListagem:tabela :formCadastro:painel :formFiltro:painel" />
 					<p:commandButton value="Fechar" oncomplete="PF('dialog').hide();" />
 				</h:panelGrid>
 			</h:form>
